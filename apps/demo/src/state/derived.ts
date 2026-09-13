@@ -35,33 +35,33 @@ export function grantMinutesFor(dealsAccepted: number): number {
 /**
  * A granted app-time countdown always plays out over a fixed 20 real
  * seconds on screen — regardless of whether 5, 3, or 2 virtual minutes were
- * granted — so the demo never sits through an actual 5-minute wait. It's
- * paced slow/fast/slow instead of linear: the first and last 5 real seconds
- * each burn through only 15% of the virtual time (a slow start, then a
- * suspenseful crawl toward 0:00), while the middle 10 real seconds rush
- * through the remaining 70% — the clock visibly races down in the middle.
+ * granted — so the demo never sits through an actual 5-minute wait. The two
+ * edges tick at true real-time pace (1 virtual second per real second, so
+ * the viewer sees 4:59, 4:58, 4:57... tick by one at a time, and the same
+ * at the very end: 0:05, 0:04... 0:00) while the middle 10 real seconds
+ * absorb whatever's left of the virtual total in one fast, visibly-jumping
+ * countdown.
  */
 export const GRANT_REAL_DURATION_SECONDS = 20
-const GRANT_SLOW_PHASE_SECONDS = 5
-const GRANT_SLOW_PHASE_SHARE = 0.15
+const GRANT_EDGE_SECONDS = 5
 
 /** `realSecondsElapsed` is real seconds since the grant started (0..20). */
 export function remainingGrantSeconds(totalSeconds: number, realSecondsElapsed: number): number {
   const r = clamp(realSecondsElapsed, 0, GRANT_REAL_DURATION_SECONDS)
-  const fastPhaseSeconds = GRANT_REAL_DURATION_SECONDS - GRANT_SLOW_PHASE_SECONDS * 2
-  const fastShare = 1 - GRANT_SLOW_PHASE_SHARE * 2
-  const slowEnd = GRANT_REAL_DURATION_SECONDS - GRANT_SLOW_PHASE_SECONDS
+  const fastRealSeconds = GRANT_REAL_DURATION_SECONDS - GRANT_EDGE_SECONDS * 2
+  const fastVirtualSeconds = Math.max(0, totalSeconds - GRANT_EDGE_SECONDS * 2)
+  const fastEnd = GRANT_REAL_DURATION_SECONDS - GRANT_EDGE_SECONDS
 
-  let consumedFraction: number
-  if (r <= GRANT_SLOW_PHASE_SECONDS) {
-    consumedFraction = (r / GRANT_SLOW_PHASE_SECONDS) * GRANT_SLOW_PHASE_SHARE
-  } else if (r <= slowEnd) {
-    consumedFraction = GRANT_SLOW_PHASE_SHARE + ((r - GRANT_SLOW_PHASE_SECONDS) / fastPhaseSeconds) * fastShare
+  let consumed: number
+  if (r <= GRANT_EDGE_SECONDS) {
+    consumed = r
+  } else if (r <= fastEnd) {
+    consumed = GRANT_EDGE_SECONDS + ((r - GRANT_EDGE_SECONDS) / fastRealSeconds) * fastVirtualSeconds
   } else {
-    consumedFraction = 1 - GRANT_SLOW_PHASE_SHARE + ((r - slowEnd) / GRANT_SLOW_PHASE_SECONDS) * GRANT_SLOW_PHASE_SHARE
+    consumed = totalSeconds - (GRANT_REAL_DURATION_SECONDS - r)
   }
 
-  return Math.max(0, Math.round(totalSeconds * (1 - consumedFraction)))
+  return Math.max(0, Math.round(totalSeconds - consumed))
 }
 
 /**
