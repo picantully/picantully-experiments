@@ -59,3 +59,4 @@ running the app.
 | Name    | Folder         | Hypothesis / goal                                              | Status   |
 | ------- | -------------- | ---------------------------------------------------------------- | -------- |
 | Landing | `apps/landing` | Copy of the current production landing page — starting point for variants. | baseline |
+| Demo    | `apps/demo`    | Interactive phone-mockup demo of the Picantully negotiation flow (Vite + React + Tailwind), for embedding on the landing page or sharing standalone. | active |

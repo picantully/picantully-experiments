@@ -1,0 +1,110 @@
+@import "tailwindcss";
+@import "@picantully/design-system/tokens.css";
+
+/* Map the shared Picantully design-system tokens into Tailwind v4 @theme so
+   utilities like bg-bg2, text-mut, border-border2, font-display, rounded-card
+   are available — same convention as apps/landing/app/globals.css. */
+@theme inline {
+  --color-bg: var(--pica-bg);
+  --color-bg2: var(--pica-bg2);
+  --color-card: var(--pica-card);
+  --color-card-solid: var(--pica-card-solid);
+  --color-surface2: var(--pica-surface2);
+
+  --color-accent: var(--pica-accent);
+  --color-accent-dark: var(--pica-accent-dark);
+  --color-accent-deep: var(--pica-accent-deep);
+  --color-red: var(--pica-red);
+  --color-red-dark: var(--pica-red-dark);
+  --color-green: var(--pica-green);
+  --color-green-dark: var(--pica-green-dark);
+  --color-gold: var(--pica-gold);
+  --color-orange: var(--pica-orange);
+
+  --color-ink: var(--pica-ink);
+  --color-mut: var(--pica-mut);
+  --color-mut2: var(--pica-mut2);
+
+  --color-border: var(--pica-border);
+  --color-border2: var(--pica-border2);
+
+  --font-display: var(--pica-font-display);
+  --font-body: var(--pica-font-body);
+  --font-mono: var(--pica-font-mono);
+
+  --radius-card: var(--pica-radius-card);
+  --radius-button: var(--pica-radius-button);
+  --radius-pill: var(--pica-radius-pill);
+  --radius-icon: var(--pica-radius-icon);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--pica-bg);
+  color: var(--pica-ink);
+  font-family: var(--pica-font-body);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+/* Typing-indicator dots — the one keyframe not already in the shared
+   tokens.css (pica-in/pica-pop/pica-bubble cover the rest of the motion). */
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/*
+ * Responsive phone frame: full-bleed under 760px, a fixed-aspect 320×660
+ * frame scaled to fit the viewport height above that. This is a pure-CSS
+ * reimplementation of the source mockup's imperative `fit()` resize
+ * listener — no JS, no layout thrash on resize.
+ */
+@layer components {
+  .phone-frame {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    border-radius: 0;
+  }
+
+  @media (min-width: 760px) {
+    .phone-frame {
+      position: relative;
+      inset: auto;
+      z-index: auto;
+      /*
+       * Keep the internal layout at its native 320×660 design size always —
+       * every child (dock icons, text, paddings) was authored in fixed px
+       * for that canvas, so resizing this box via width/height (as before)
+       * forces flex children to shrink below their content size on short
+       * viewports (e.g. a windowed browser under ~770px tall), collapsing
+       * the last dock icon to 0px. Scale the whole box as one visual unit
+       * instead — nothing inside ever needs to reflow or shrink.
+       */
+      --phone-scale: min(1, calc((100dvh - 110px) / 660px));
+      width: 320px;
+      height: 660px;
+      border-radius: 44px;
+      transform: scale(var(--phone-scale));
+      transform-origin: top center;
+      /* Collapse the dead space transform leaves in normal flow. */
+      margin-bottom: calc(660px * (var(--phone-scale) - 1));
+    }
+  }
+}
