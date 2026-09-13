@@ -1,0 +1,34 @@
+# dependencies
+node_modules/
+**/node_modules/
+
+# builds
+dist/
+**/dist/
+.next/
+**/.next/
+out/
+**/out/
+
+# turbo
+.turbo/
+**/.turbo/
+
+# env / secrets
+.env
+.env.*
+**/.env
+**/.env.*
+!**/.env.example
+
+# os
+.DS_Store
+**/.DS_Store
+
+# logs
+*.log
+**/*.log
+
+# typescript
+tsconfig.tsbuildinfo
+**/tsconfig.tsbuildinfo

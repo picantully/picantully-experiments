@@ -1,0 +1,121 @@
+@import "tailwindcss";
+@import "@picantully/design-system/tokens.css";
+
+/* Map the Picantully design-system tokens into Tailwind v4 @theme so utilities
+   like bg-bg, text-ink, border-border2, font-display, etc. are available. */
+@theme inline {
+  --color-bg: var(--pica-bg);
+  --color-bg2: var(--pica-bg2);
+  --color-card: var(--pica-card);
+  --color-card-solid: var(--pica-card-solid);
+  --color-surface2: var(--pica-surface2);
+
+  --color-accent: var(--pica-accent);
+  --color-accent-dark: var(--pica-accent-dark);
+  --color-accent-deep: var(--pica-accent-deep);
+  --color-red: var(--pica-red);
+  --color-red-dark: var(--pica-red-dark);
+  --color-green: var(--pica-green);
+  --color-green-dark: var(--pica-green-dark);
+  --color-gold: var(--pica-gold);
+  --color-orange: var(--pica-orange);
+
+  --color-ink: var(--pica-ink);
+  --color-mut: var(--pica-mut);
+  --color-mut2: var(--pica-mut2);
+
+  --color-border: var(--pica-border);
+  --color-border2: var(--pica-border2);
+
+  --font-display: var(--pica-font-display);
+  --font-body: var(--pica-font-body);
+  --font-mono: var(--pica-font-mono);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--pica-bg);
+  color: var(--pica-ink);
+  font-family: var(--pica-font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  /* Hero ambient glow — red top-right, green top-left (from the mockup). */
+  background-image:
+    radial-gradient(60% 40% at 85% -5%, rgba(239, 68, 56, 0.26), transparent 60%),
+    radial-gradient(50% 35% at 0% 6%, rgba(81, 233, 143, 0.12), transparent 60%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ── Display helpers ── */
+.disp {
+  font-family: var(--pica-font-display);
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+
+.grad-red {
+  background: linear-gradient(120deg, #ff6a4d, var(--pica-red));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.grad-green {
+  background: linear-gradient(120deg, #7dffb4, var(--pica-green));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ── Scroll-reveal animation (mirrors the mockup's .reveal) ── */
+@keyframes pica-rise {
+  from {
+    transform: translateY(26px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.reveal {
+  opacity: 0;
+}
+.reveal.in {
+  animation: pica-rise 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@keyframes pica-floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+.floaty {
+  animation: pica-floaty 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal.in {
+    animation: none;
+    opacity: 1;
+  }
+  .floaty {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "picantully-experiments",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Sandbox pnpm workspace for Picantully landing-page experiments.",
+  "packageManager": "pnpm@10.21.0",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.0"
+  }
+}

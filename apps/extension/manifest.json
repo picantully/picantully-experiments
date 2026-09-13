@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "Picantully",
+  "version": "0.1.0",
+  "description": "Tu coach anti-distracción picante. Negociá con IA para acceder a sitios bloqueados.",
+  "permissions": ["storage", "tabs", "offscreen", "identity"],
+  "host_permissions": [
+    "https://nyc.cloud.appwrite.io/*",
+    "https://*.cloud.appwrite.io/*"
+  ],
+  "background": {
+    "service_worker": "src/background.ts",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/popup/index.html",
+    "default_title": "Picantully",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": ["src/content/index.tsx"],
+      "css": ["src/content/overlay.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

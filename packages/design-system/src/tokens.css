@@ -1,0 +1,115 @@
+/* tokens.css — tokens de Picantully como CSS custom properties.
+   Espejo de src/tokens.ts. Para contextos no-React (overlay de la
+   extensión, Tailwind @theme, CSS plano).
+   Se exponen tanto en :root como en .pica para poder scopearlos. */
+
+:root,
+.pica {
+  /* ── Marca · rojo picante ── */
+  --pica-accent: #d22b1d;
+  --pica-accent-dark: #a81f10;
+  --pica-accent-deep: #4a0c06;
+  --pica-accent-soft: rgba(210, 43, 29, 0.15);
+  --pica-glow: rgba(210, 43, 29, 0.4);
+  --pica-red: #ef4438;
+  --pica-red-dark: #c41f14;
+
+  /* ── Verde viral ── */
+  --pica-green: #51e98f;
+  --pica-green-dark: #1f9e5e;
+  --pica-green-info: #2bd9a0;
+  --pica-green-info-dark: #179e5e;
+
+  /* ── Acentos cálidos ── */
+  --pica-gold: #ffb02e;
+  --pica-orange: #ff8a3c;
+  --pica-coral: #ff6b4d;
+  --pica-transfer: #9b938c;
+
+  /* ── Superficies ── */
+  --pica-bg: #0b0807;
+  --pica-bg2: #17110f;
+  --pica-card: rgba(255, 255, 255, 0.05);
+  --pica-card-solid: #1e1613;
+  --pica-surface2: #241612;
+
+  /* ── Bordes ── */
+  --pica-border: rgba(255, 240, 234, 0.1);
+  --pica-border2: rgba(255, 240, 234, 0.18);
+
+  /* ── Texto ── */
+  --pica-ink: #fff5f1;
+  --pica-mut: rgba(255, 245, 241, 0.6);
+  --pica-mut2: rgba(255, 245, 241, 0.38);
+
+  /* ── Gradientes ── */
+  --pica-grad-red: linear-gradient(150deg, #ef4438, #c41f14);
+  --pica-grad-green: linear-gradient(150deg, #6cf0a3, #1f9e5e);
+  --pica-grad-card: linear-gradient(155deg, #d22b1d 0%, #a81f10 60%, #4a0c06 100%);
+  --pica-grad-text: linear-gradient(120deg, #ff6a4d, #ef4438);
+
+  /* ── Tipografía ── */
+  --pica-font-display: "Space Grotesk", system-ui, sans-serif;
+  --pica-font-body: "Manrope", system-ui, sans-serif;
+  --pica-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* ── Radios ── */
+  --pica-radius-card: 20px;
+  --pica-radius-button: 15px;
+  --pica-radius-pill: 999px;
+  --pica-radius-icon: 13px;
+
+  /* ── Sombras ── */
+  --pica-shadow-red: 0 12px 30px rgba(210, 43, 29, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.22);
+  --pica-shadow-green: 0 12px 30px rgba(81, 233, 143, 0.3);
+  --pica-shadow-card: 0 16px 36px rgba(210, 43, 29, 0.4);
+  --pica-shadow-dark: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --pica-shadow-mascot: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.45));
+
+  /* ── Espaciado ── */
+  --pica-space-xs: 6px;
+  --pica-space-sm: 10px;
+  --pica-space-md: 14px;
+  --pica-space-lg: 20px;
+  --pica-space-xl: 28px;
+  --pica-space-2xl: 40px;
+}
+
+/* ── Keyframes de marca ── */
+@keyframes pica-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes pica-in {
+  from {
+    transform: translateY(12px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes pica-pop {
+  from {
+    transform: scale(0.86);
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes pica-bubble {
+  from {
+    transform: translateY(8px) scale(0.98);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}

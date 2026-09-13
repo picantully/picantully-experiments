@@ -1,0 +1,571 @@
+/*
+ * Onboarding-specific styles — scoped to avoid polluting the global stylesheet.
+ * Design tokens come from @picantully/design-system/tokens.css (already imported
+ * in globals.css). All color values mirror the prototype's exact CSS vars.
+ */
+
+/* ── Top bar ── */
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(14px);
+  background: rgba(11, 8, 7, 0.7);
+  border-bottom: 1px solid var(--pica-border);
+}
+
+.topIn {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--pica-font-display);
+  font-weight: 700;
+  font-size: 17px;
+  text-decoration: none;
+  color: var(--pica-ink);
+}
+
+.brand img {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  box-shadow: 0 6px 16px rgba(210, 43, 29, 0.4);
+}
+
+.brandSub {
+  font-family: var(--pica-font-body);
+  font-weight: 700;
+  font-size: 10px;
+  color: var(--pica-green);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-left: -3px;
+}
+
+.pbar {
+  flex: 1;
+  height: 7px;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  max-width: 280px;
+  margin-left: auto;
+}
+
+.pbarFill {
+  height: 100%;
+  border-radius: 7px;
+  background: linear-gradient(90deg, var(--pica-red), var(--pica-orange));
+  transition: width 0.5s cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.pstep {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--pica-mut);
+  white-space: nowrap;
+}
+
+/* ── Stage / screen wrapper ── */
+.stage {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 46px 24px 80px;
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.screen {
+  animation: rise 0.55s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen {
+    animation: none;
+  }
+  .floaty {
+    animation: none !important;
+  }
+}
+
+/* ── Welcome / Done screens ── */
+.welcome {
+  text-align: center;
+}
+
+.wGlow {
+  position: absolute;
+  left: 50%;
+  top: 120px;
+  transform: translateX(-50%);
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(239, 68, 56, 0.4), transparent 65%);
+  filter: blur(22px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.wChili {
+  width: 180px;
+  filter: drop-shadow(0 22px 40px rgba(0, 0, 0, 0.5));
+}
+
+.wH {
+  font-size: clamp(34px, 6vw, 56px);
+  font-weight: 700;
+  margin: 18px 0 14px;
+}
+
+.wSub {
+  font-size: 17.5px;
+  color: var(--pica-mut);
+  line-height: 1.55;
+  max-width: 470px;
+  margin: 0 auto 12px;
+}
+
+/* ── Access ticket ── */
+.ticket {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin: 22px 0 28px;
+  padding: 14px 22px;
+  border-radius: 18px;
+  background: linear-gradient(150deg, rgba(239, 68, 56, 0.14), rgba(255, 255, 255, 0.04));
+  border: 1px solid rgba(239, 68, 56, 0.4);
+}
+
+.ticketNum {
+  font-family: var(--pica-font-display);
+  font-weight: 700;
+  font-size: 26px;
+}
+
+.ticketLbl {
+  font-size: 12px;
+  color: var(--pica-mut);
+  text-align: left;
+}
+
+/* ── Generic card ── */
+.card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--pica-border);
+  border-radius: 24px;
+  padding: 34px 30px;
+}
+
+.stepHead {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.stepHead h2 {
+  font-family: var(--pica-font-display);
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+}
+
+.stepHead p {
+  color: var(--pica-mut);
+  font-size: 15.5px;
+  line-height: 1.5;
+}
+
+.mascot {
+  width: 84px;
+  margin: 0 auto 14px;
+  display: block;
+}
+
+/* ── Speech bubble ── */
+.says {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--pica-border);
+  border-radius: 16px;
+  border-bottom-left-radius: 5px;
+  padding: 13px 16px;
+  font-size: 14.5px;
+  line-height: 1.45;
+  font-weight: 500;
+  margin-bottom: 22px;
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+}
+
+.says img {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+}
+
+/* ── Form labels ── */
+.label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--pica-mut);
+  margin: 18px 0 10px;
+  display: block;
+}
+
+.label:first-child {
+  margin-top: 0;
+}
+
+/* ── Grid layouts ── */
+.row2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.row3 {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 1fr;
+  gap: 12px;
+}
+
+.gridOpts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 520px) {
+  .row2,
+  .row3 {
+    grid-template-columns: 1fr;
+  }
+  .gridOpts {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Input ── */
+.inp {
+  width: 100%;
+  height: 54px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--pica-border2);
+  border-radius: 15px;
+  padding: 0 18px;
+  color: var(--pica-ink);
+  font-size: 15.5px;
+  font-family: var(--pica-font-body);
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+}
+
+.inp:focus {
+  border-color: var(--pica-red);
+}
+
+.inp.inpError {
+  border-color: var(--pica-red);
+}
+
+/* ── Error message ── */
+.errorMsg {
+  font-size: 12.5px;
+  color: var(--pica-red);
+  margin-top: 6px;
+  display: block;
+}
+
+/* ── Option chips (single/multi-select flex row) ── */
+.seg {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.opt {
+  flex: 1;
+  min-width: fit-content;
+  min-height: 50px;
+  padding: 0 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--pica-border2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--pica-mut);
+  text-align: center;
+  user-select: none;
+}
+
+.opt:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.optOn {
+  background: linear-gradient(150deg, var(--pica-red), var(--pica-red-dark));
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 8px 20px rgba(210, 43, 29, 0.32);
+}
+
+/* ── Option cards (grid, e.g. distraction sites) ── */
+.optCard {
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--pica-border2);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  user-select: none;
+}
+
+.optCard:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.optCardOn {
+  border-color: var(--pica-red);
+  background: linear-gradient(150deg, rgba(239, 68, 56, 0.14), rgba(255, 255, 255, 0.04));
+}
+
+.optCardIcon {
+  font-size: 22px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.optCardLabel {
+  font-size: 14.5px;
+  font-weight: 700;
+}
+
+/* ── Connect screen ── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0;
+  color: var(--pica-mut2);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.divider span {
+  flex: 1;
+  height: 1px;
+  background: var(--pica-border);
+}
+
+/* ── OTP inputs ── */
+.otpWrap {
+  display: flex;
+  gap: clamp(6px, 2vw, 10px);
+  justify-content: center;
+}
+
+.otpInput {
+  width: clamp(34px, 12vw, 48px);
+  height: clamp(46px, 14vw, 58px);
+  text-align: center;
+  font-size: clamp(18px, 5vw, 24px);
+  font-weight: 700;
+  font-family: var(--pica-font-display);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--pica-border2);
+  border-radius: 14px;
+  color: var(--pica-ink);
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+}
+
+.otpInput:focus {
+  border-color: var(--pica-red);
+}
+
+/* ── Install download cards ── */
+.dlGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 8px 0 4px;
+}
+
+@media (max-width: 520px) {
+  .dlGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dl {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--pica-border2);
+  border-radius: 18px;
+  padding: 18px 16px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+  color: var(--pica-ink);
+}
+
+.dl:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.dlPrime {
+  border-color: rgba(239, 68, 56, 0.45);
+  background: linear-gradient(150deg, rgba(239, 68, 56, 0.12), rgba(255, 255, 255, 0.04));
+  grid-column: 1 / -1;
+}
+
+.dlActive {
+  border-color: var(--pica-green) !important;
+  background: linear-gradient(150deg, rgba(81, 233, 143, 0.14), rgba(255, 255, 255, 0.04)) !important;
+}
+
+.dlIcon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dlTitle {
+  font-size: 15px;
+  font-family: var(--pica-font-display);
+  display: block;
+  font-weight: 700;
+}
+
+.dlSub {
+  font-size: 12px;
+  color: var(--pica-mut2);
+}
+
+.tagRec {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--pica-red);
+  background: rgba(239, 68, 56, 0.16);
+  padding: 3px 8px;
+  border-radius: 999px;
+  margin-left: auto;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ── Action row (back + continue) ── */
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+  align-items: center;
+}
+
+.backBtn {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--pica-mut);
+  cursor: pointer;
+  padding: 10px;
+  background: none;
+  border: none;
+  transition: color 0.15s;
+}
+
+.backBtn:hover {
+  color: var(--pica-ink);
+}
+
+/* ── Confetti ── */
+.confettiContainer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.confettiPiece {
+  position: absolute;
+  width: 9px;
+  height: 14px;
+  border-radius: 2px;
+  top: -20px;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(540deg);
+  }
+}
+
+/* ── Birth date hint ── */
+.birthHint {
+  font-size: 12px;
+  color: var(--pica-mut2);
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+/* ── Detail input (goals) ── */
+.detailBlock {
+  margin-top: 10px;
+}
+
+/* ── Pill badge ── */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--pica-border);
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 10px;
+}
