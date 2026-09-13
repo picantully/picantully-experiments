@@ -1,7 +1,7 @@
 import { APPS, getApp, type AppId } from '../data/apps'
 import { REPLIES, VOICES } from '../data/voices'
 import { fakeActivityTime } from './demoClock'
-import { clamp, fillTemplate, grantMinutesFor, isWithinBlockWindow } from './derived'
+import { clamp, fillTemplate, grantMinutesFor, isWithinBlockWindow, remainingGrantSeconds } from './derived'
 import type { ActivityEntry, ActivityKind, DemoAction, DemoState } from './types'
 
 let idCounter = 0
@@ -43,6 +43,8 @@ export const initialDemoState: DemoState = {
   dealsAccepted: 0,
   openAppId: null,
   grantSeconds: 0,
+  grantTotalSeconds: 0,
+  grantRealSeconds: 0,
   focusLength: 25,
   focusSeconds: 25 * 60,
   focusRunning: false,
@@ -87,6 +89,8 @@ function openChat(state: DemoState, appId: AppId, expired: boolean): DemoState {
     typing: false,
     openAppId: null,
     grantSeconds: 0,
+    grantTotalSeconds: 0,
+    grantRealSeconds: 0,
     pendingBotReply: null
   }
 }
@@ -186,9 +190,12 @@ export function demoReducer(state: DemoState, action: DemoAction): DemoState {
         return openChat(state, action.id, false)
       }
       if (distracting) {
-        return flash({ ...state, screen: 'app', openAppId: action.id, grantSeconds: 0 }, 'Fuera del horario de bloqueo. Pasá tranquilo.')
+        return flash(
+          { ...state, screen: 'app', openAppId: action.id, grantSeconds: 0, grantTotalSeconds: 0, grantRealSeconds: 0 },
+          'Fuera del horario de bloqueo. Pasá tranquilo.'
+        )
       }
-      return { ...state, screen: 'app', openAppId: action.id, grantSeconds: 0 }
+      return { ...state, screen: 'app', openAppId: action.id, grantSeconds: 0, grantTotalSeconds: 0, grantRealSeconds: 0 }
     }
 
     case 'START_FOCUS_SESSION':
@@ -223,6 +230,8 @@ export function demoReducer(state: DemoState, action: DemoAction): DemoState {
         screen: 'app',
         openAppId: state.chatAppId,
         grantSeconds: minutes * 60,
+        grantTotalSeconds: minutes * 60,
+        grantRealSeconds: 0,
         dealsAccepted: state.dealsAccepted + 1,
         dealOpen: false
       }
@@ -312,19 +321,23 @@ export function demoReducer(state: DemoState, action: DemoAction): DemoState {
       // Granted time keeps counting down regardless of which screen is
       // shown, so leaving and returning to a granted app reflects real
       // elapsed time instead of a countdown that freezes on GO_HOME and then
-      // gets silently discarded on reopen.
+      // gets silently discarded on reopen. It's intentionally NOT paced by
+      // demoSpeed — see remainingGrantSeconds: any grant always plays out
+      // over a fixed 20 real seconds, slow/fast/slow, regardless of how many
+      // virtual minutes were granted.
       if (state.grantSeconds > 0) {
-        const next = state.grantSeconds - state.demoSpeed
+        const grantRealSeconds = state.grantRealSeconds + 1
+        const next = remainingGrantSeconds(state.grantTotalSeconds, grantRealSeconds)
         if (next <= 0 && state.openAppId) {
           // Only jump into the "time's up" chat if the user is actually
           // looking at the app right now; if they're elsewhere, just clear
           // the grant quietly — reopening it starts a fresh negotiation.
           if (state.screen === 'app') {
-            return openChat({ ...state, grantSeconds: 0 }, state.openAppId, true)
+            return openChat({ ...state, grantSeconds: 0, grantTotalSeconds: 0, grantRealSeconds: 0 }, state.openAppId, true)
           }
-          return { ...state, grantSeconds: 0, openAppId: null }
+          return { ...state, grantSeconds: 0, grantTotalSeconds: 0, grantRealSeconds: 0, openAppId: null }
         }
-        return { ...state, grantSeconds: Math.max(0, next) }
+        return { ...state, grantSeconds: next, grantRealSeconds }
       }
       return state
     }

@@ -54,6 +54,10 @@ export interface DemoState {
   openAppId: AppId | null
   /** Seconds left of borrowed time before it auto-expires back into chat. */
   grantSeconds: number
+  /** The virtual total the current grant started at (e.g. 300 for 5 min). */
+  grantTotalSeconds: number
+  /** Real seconds elapsed since the grant started (see `remainingGrantSeconds`). */
+  grantRealSeconds: number
 
   focusLength: FocusLength
   focusSeconds: number
